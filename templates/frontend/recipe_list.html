@@ -4,7 +4,7 @@
 
 {% block main %}
     <h1>Recipes</h1>
-    {% if recipes.count %}
+    {% if recipes %}
         <ul>
             {% for recipe in recipes %}
                 <li>
@@ -12,5 +12,7 @@
                 </li>
             {% endfor %}
         </ul>
+    {% else %}
+        <p>No recipes found</p>
     {% endif %}
 {% endblock %}

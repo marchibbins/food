@@ -4,7 +4,7 @@
 
 {% block main %}
     <h1>{{ recipe.name }}</h1>
-    {% if recipe.quantities.count %}
+    {% if recipe.quantities %}
         <ul>
             {% for quantity in recipe.quantities %}
                 <li>{{ quantity.amount }} {{ quantity.ingredient.measure }} {{ quantity.ingredient.name }}</li>
