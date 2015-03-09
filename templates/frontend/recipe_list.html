@@ -7,7 +7,9 @@
     {% if recipes.count %}
         <ul>
             {% for recipe in recipes %}
-                <li>{{ recipe.name }}</li>
+                <li>
+                    <a href="{{ url_for('frontend.recipe_detail', slug=recipe.slug) }}">{{ recipe.name }}</a>
+                </li>
             {% endfor %}
         </ul>
     {% endif %}

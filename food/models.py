@@ -14,5 +14,6 @@ class Quantity(ndb.Model):
 
 class Recipe(ndb.Model):
     name = ndb.StringProperty(required=True)
+    slug = ndb.StringProperty(indexed=True)
     method = ndb.TextProperty()
     quantities = ndb.StructuredProperty(Quantity, repeated=True)

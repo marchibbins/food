@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ recipe.name }}{% endblock %}
+
+{% block main %}
+    <h1>{{ recipe.name }}</h1>
+    {% if recipe.quantities.count %}
+        <ul>
+            {% for quantity in recipe.quantities %}
+                <li>{{ quantity.amount }} {{ quantity.ingredient.measure }} {{ quantity.ingredient.name }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
