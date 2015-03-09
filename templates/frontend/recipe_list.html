@@ -3,19 +3,11 @@
 {% block title %}Recipe list{% endblock %}
 
 {% block main %}
+    <h1>Recipes</h1>
     {% if recipes.count %}
         <ul>
             {% for recipe in recipes %}
-                <li>
-                    <strong>{{ recipe.name }}</strong>
-                    {% if recipe.quantities.count %}
-                        <ul>
-                            {% for quantity in recipe.quantities %}
-                                <li>{{ quantity.amount }} {{ quantity.ingredient.measure }} {{ quantity.ingredient.name }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </li>
+                <li>{{ recipe.name }}</li>
             {% endfor %}
         </ul>
     {% endif %}
