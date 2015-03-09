@@ -6,7 +6,7 @@ frontend = Blueprint('frontend', __name__)
 
 
 @frontend.route('/')
-def index():
+def recipe_list():
     """ Render a list of recipes. """
     recipes = Recipe.query().fetch()
-    return render_template('index.html', recipes=recipes)
+    return render_template('frontend/recipe_list.html', recipes=recipes)

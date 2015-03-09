@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Index</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Recipe list{% endblock %}
+
+{% block main %}
     {% if recipes.count %}
         <ul>
             {% for recipe in recipes %}
@@ -20,5 +19,4 @@
             {% endfor %}
         </ul>
     {% endif %}
-</body>
-</html>
+{% endblock %}
