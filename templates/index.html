@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Index</title>
+</head>
+<body>
+    {% if recipes.count %}
+        <ul>
+            {% for recipe in recipes %}
+                <li>
+                    <strong>{{ recipe.name }}</strong>
+                    {% if recipe.quantities.count %}
+                        <ul>
+                            {% for quantity in recipe.quantities %}
+                                <li>{{ quantity.amount }} {{ quantity.ingredient.measure }} {{ quantity.ingredient.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

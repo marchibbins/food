@@ -1,12 +1,8 @@
-
 from flask import Flask
-app = Flask(__name__)
+from frontend.views import frontend
+
 
 # Note: We don't need to call run() since our application is embedded within
 # the App Engine WSGI application server.
-
-
-@app.route('/')
-def hello():
-    """Return a friendly HTTP greeting."""
-    return 'Hello World!'
+app = Flask(__name__)
+app.register_blueprint(frontend)
