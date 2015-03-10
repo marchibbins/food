@@ -11,5 +11,11 @@
             {% endfor %}
         </ul>
     {% endif %}
+
+    {% if saved %}
+        <h2>Saved recipes</h2>
+        <div>{{ saved }}</div>
+    {% endif %}
+
     <a href="{{ url_for('frontend.recipe_list') }}">Recipes</a>
 {% endblock %}

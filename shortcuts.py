@@ -1,4 +1,12 @@
-from flask import abort
+from flask import abort, session
+
+
+def append_to_session(key, value):
+    """ Gets or creates a session stored list for given key,
+    appends new value and returns updated list """
+    key_list = session.get(key, [])
+    key_list.append(value)
+    return key_list
 
 
 def get_or_404(klass, *args, **kwargs):
