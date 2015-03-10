@@ -3,6 +3,16 @@
 {% block title %}{{ recipe.name }}{% endblock %}
 
 {% block main %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
     <h1>{{ recipe.name }}</h1>
     {% if recipe.quantities %}
         <ul>
@@ -12,10 +22,9 @@
         </ul>
     {% endif %}
 
-    {% if saved %}
-        <h2>Saved recipes</h2>
-        <div>{{ saved }}</div>
-    {% endif %}
+    <form action="{{ url_for('frontend.recipe_save', slug=recipe.slug) }}" method="POST">
+        <button>Save</button>
+    </form>
 
     <a href="{{ url_for('frontend.recipe_list') }}">Recipes</a>
 {% endblock %}

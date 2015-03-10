@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, flash, redirect, render_template, url_for
 from food.models import Recipe
 from shortcuts import unique_append_to_session, get_or_404
 
@@ -20,12 +20,13 @@ def recipe_detail(slug):
     return render_template('frontend/recipe_detail.html', recipe=recipe)
 
 
-@frontend.route('/recipe/<slug>/save')
+@frontend.route('/recipe/<slug>/save', methods=['POST'])
 def recipe_save(slug):
     """ Saves a recipe to session, or 404. """
     recipe = get_or_404(Recipe, Recipe.slug == slug)
     saved = unique_append_to_session('recipes', recipe.key.urlsafe())
-    return render_template('frontend/recipe_detail.html', recipe=recipe, saved=saved)
+    flash(u'Recipe saved')
+    return redirect(url_for('frontend.recipe_detail', slug=slug))
 
 
 def frontend_errors(app):
