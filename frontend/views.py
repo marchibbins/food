@@ -1,5 +1,6 @@
-from flask import abort, Blueprint, render_template
+from flask import Blueprint, render_template
 from food.models import Recipe
+from shortcuts import get_or_404
 
 
 frontend = Blueprint('frontend', __name__)
@@ -15,9 +16,7 @@ def recipe_list():
 @frontend.route('/recipe/<slug>')
 def recipe_detail(slug):
     """ Render a recipe matching a slug, or 404. """
-    recipe = Recipe.query(Recipe.slug == slug).get()
-    if not recipe:
-        abort(404)
+    recipe = get_or_404(Recipe, Recipe.slug == slug)
     return render_template('frontend/recipe_detail.html', recipe=recipe)
 
 
