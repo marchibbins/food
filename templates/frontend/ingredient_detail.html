@@ -3,5 +3,9 @@
 {% block title %}{{ ingredient.name }}{% endblock %}
 
 {% block main %}
-    <h1>{{ ingredient.name }} ({{ ingredient.measure }})</h1>
+    <h1>{{ ingredient.name }}</h1>
+
+    <ul>
+        <li>{{ ingredient.measure }}</li>
+    </ul>
 {% endblock %}
