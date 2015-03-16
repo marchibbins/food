@@ -1,7 +1,8 @@
 from flask import abort, Blueprint, flash, redirect, render_template, \
     request, session, url_for
+from food.models import Ingredient, Quantity, Recipe
 from google.appengine.ext import ndb
-from food.models import Ingredient, Recipe
+from itertools import chain
 from shortcuts import remove_from_session, unique_append_to_session, get_or_404
 
 
@@ -61,18 +62,26 @@ def recipe_action(slug, action):
 
 @frontend.route('/saved')
 def saved():
-    """ Render a list of saved recipes. """
-    recipes = ndb.get_multi(map(lambda string: ndb.Key(urlsafe=string),
-                                session.get('recipes', [])))
-    return render_template('frontend/recipe_list.html', recipes=recipes)
+    """ Render a list of saved recipes and collate ingredients. """
+    recipes = filter(None, ndb.get_multi(map(lambda string: ndb.Key(urlsafe=string),
+                                             session.get('recipes', []))))
+    quantities = {}
+    for quantity in list(chain.from_iterable(
+                           map(lambda recipe: recipe.quantities, recipes))):
+        key = quantity.ingredient.slug
+        if quantities.get(key):
+            quantities[key].amount += quantity.amount
+        else:
+            quantities[key] = Quantity(ingredient=quantity.ingredient,
+                                           amount=quantity.amount)
+
+    return render_template('frontend/saved.html', recipes=recipes,
+                           quantities=quantities)
 
 
 @frontend.route('/reload')
 def dummy_data():
     """ Adds dummy data for development. """
-    from google.appengine.ext import ndb
-    from food.models import Quantity
-
     # Out with the old
     ndb.delete_multi(Ingredient.query().fetch(keys_only=True))
     ndb.delete_multi(Recipe.query().fetch(keys_only=True))

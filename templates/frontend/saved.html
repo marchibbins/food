@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Saved recipe list{% endblock %}
+
+{% block main %}
+    <h1>Saved recipes</h1>
+    {% if recipes %}
+        <ul>
+            {% for recipe in recipes %}
+                <li>
+                    <a href="{{ url_for('frontend.recipe_detail', slug=recipe.slug) }}">{{ recipe.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recipes found</p>
+    {% endif %}
+
+    {% if quantities %}
+        <h2>Ingredients</h2>
+        <ul>
+            {% for quantity in quantities.values() %}
+                <li>{{ quantity.amount }} {{ quantity.ingredient.measure }} <a href="{{ url_for('frontend.ingredient_list', slug=quantity.ingredient.slug) }}">{{ quantity.ingredient.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <a href="{{ url_for('frontend.recipe_list') }}">Recipes</a>
+{% endblock %}
