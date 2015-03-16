@@ -40,8 +40,10 @@ def ingredient_detail(slug):
 def recipe_save(slug):
     """ Saves a recipe to session, or 404. """
     recipe = get_or_404(Recipe, Recipe.slug == slug)
-    saved = unique_append_to_session('recipes', recipe.key.urlsafe())
-    flash(u'Recipe saved')
+    if unique_append_to_session('recipes', recipe.key.urlsafe()):
+        flash(u'Recipe saved')
+    else:
+        flash(u'Unable to save recipe')
     return redirect(url_for('frontend.recipe_detail', slug=slug))
 
 
