@@ -20,7 +20,7 @@
         <h2>Ingredients</h2>
         <ul>
             {% for quantity in quantities.values() %}
-                <li>{{ quantity.amount }} {{ quantity.ingredient.measure }} <a href="{{ url_for('frontend.ingredient_list', slug=quantity.ingredient.slug) }}">{{ quantity.ingredient.name }}</a></li>
+                <li>{{ quantity.amount }} {{ quantity.ingredient.measure }} <a href="{{ url_for('frontend.ingredient_detail', slug=quantity.ingredient.slug) }}">{{ quantity.ingredient.name }}</a></li>
             {% endfor %}
         </ul>
     {% endif %}
