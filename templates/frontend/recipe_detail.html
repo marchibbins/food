@@ -7,7 +7,7 @@
     {% if recipe.quantities %}
         <ul>
             {% for quantity in recipe.quantities %}
-                <li>{{ quantity.amount }} {{ quantity.ingredient.measure }} {{ quantity.ingredient.name }}</li>
+                <li>{{ quantity.amount }} {{ quantity.ingredient.measure }} <a href="{{ url_for('frontend.ingredient_list', slug = quantity.ingredient.slug) }}">{{ quantity.ingredient.name }}</a></li>
             {% endfor %}
         </ul>
     {% endif %}
