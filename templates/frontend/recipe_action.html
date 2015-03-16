@@ -8,6 +8,4 @@
     <form action="{{ url_for('frontend.recipe_action', slug=recipe.slug, action=action) }}" method="POST">
         <button>Confirm</button>
     </form>
-
-    <a href="{{ url_for('frontend.recipe_list') }}">Recipes</a>
 {% endblock %}

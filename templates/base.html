@@ -17,6 +17,16 @@
         {% endwith %}
 
         {% block main %}{% endblock %}
+
+        <footer>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('frontend.recipe_list') }}">Recipes</a></li>
+                    <li><a href="{{ url_for('frontend.ingredient_list') }}">Ingredients</a></li>
+                    <li><a href="{{ url_for('frontend.saved') }}">Saved recipes</a></li>
+                </ul>
+            </nav>
+        </footer>
     </main>
 </body>
 </html>
