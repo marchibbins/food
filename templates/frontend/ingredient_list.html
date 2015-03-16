@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Ingredient list{% endblock %}
+
+{% block main %}
+    <h1>Ingredients</h1>
+    {% if ingredients %}
+        <ul>
+            {% for ingredient in ingredients %}
+                <li>
+                    <a href="{{ url_for('frontend.ingredient_detail', slug=ingredient.slug) }}">{{ ingredient.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No ingredients found</p>
+    {% endif %}
+{% endblock %}

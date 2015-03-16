@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ ingredient.name }}{% endblock %}
+
+{% block main %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <h1>{{ ingredient.name }} ({{ ingredient.measure }})</h1>
+
+    <a href="{{ url_for('frontend.ingredient_list') }}">Ingredients</a>
+{% endblock %}

@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, redirect, render_template, url_for
-from food.models import Recipe
+from food.models import Ingredient, Recipe
 from shortcuts import unique_append_to_session, get_or_404
 
 
@@ -20,6 +20,22 @@ def recipe_detail(slug):
     return render_template('frontend/recipe_detail.html', recipe=recipe)
 
 
+@frontend.route('/ingredients/')
+def ingredient_list():
+    """ Render a list of ingredients. """
+    ingredients = Ingredient.query().fetch()
+    return render_template('frontend/ingredient_list.html',
+                           ingredients=ingredients)
+
+
+@frontend.route('/ingredient/<slug>')
+def ingredient_detail(slug):
+    """ Render a ingredient matching a slug, or 404. """
+    ingredient = get_or_404(Ingredient, Ingredient.slug == slug)
+    return render_template('frontend/ingredient_detail.html',
+                           ingredient=ingredient)
+
+
 @frontend.route('/recipe/<slug>/save', methods=['POST'])
 def recipe_save(slug):
     """ Saves a recipe to session, or 404. """
@@ -33,7 +49,7 @@ def recipe_save(slug):
 def dummy_data():
     """ Adds dummy data for development. """
     from google.appengine.ext import ndb
-    from food.models import Ingredient, Quantity
+    from food.models import Quantity
 
     # Out with the old
     ndb.delete_multi(Ingredient.query().fetch(keys_only=True))
