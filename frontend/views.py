@@ -28,7 +28,7 @@ def ingredient_list():
                            ingredients=ingredients)
 
 
-@frontend.route('/ingredient/<slug>')
+@frontend.route('/ingredients/<slug>')
 def ingredient_detail(slug):
     """ Render a ingredient matching a slug, or 404. """
     ingredient = get_or_404(Ingredient, Ingredient.slug == slug)
