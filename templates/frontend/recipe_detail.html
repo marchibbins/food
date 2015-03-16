@@ -3,16 +3,6 @@
 {% block title %}{{ recipe.name }}{% endblock %}
 
 {% block main %}
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-
     <h1>{{ recipe.name }}</h1>
     {% if recipe.quantities %}
         <ul>
