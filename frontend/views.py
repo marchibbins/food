@@ -1,4 +1,5 @@
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, session, url_for
+from google.appengine.ext import ndb
 from food.models import Ingredient, Recipe
 from shortcuts import unique_append_to_session, get_or_404
 
@@ -45,6 +46,14 @@ def recipe_save(slug):
     else:
         flash(u'Unable to save recipe')
     return redirect(url_for('frontend.recipe_detail', slug=slug))
+
+
+@frontend.route('/saved')
+def saved():
+    """ Render a list of saved recipes. """
+    recipes = ndb.get_multi(map(lambda string: ndb.Key(urlsafe=string),
+                                session.get('recipes', [])))
+    return render_template('frontend/recipe_list.html', recipes=recipes)
 
 
 @frontend.route('/reload')
