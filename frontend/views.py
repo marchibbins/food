@@ -12,7 +12,7 @@ frontend = Blueprint('frontend', __name__)
 @frontend.route('/')
 def recipe_list():
     """ Render a list of recipes. """
-    recipes = Recipe.query().fetch()
+    recipes = Recipe.fetch_all()
     return render_template('frontend/recipe_list.html', recipes=recipes)
 
 
@@ -26,7 +26,7 @@ def recipe_detail(slug):
 @frontend.route('/ingredients/')
 def ingredient_list():
     """ Render a list of ingredients. """
-    ingredients = Ingredient.query().fetch()
+    ingredients = Ingredient.fetch_all()
     return render_template('frontend/ingredient_list.html',
                            ingredients=ingredients)
 
