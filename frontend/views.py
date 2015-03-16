@@ -1,7 +1,8 @@
-from flask import Blueprint, flash, redirect, render_template, request, session, url_for
+from flask import abort, Blueprint, flash, redirect, render_template, \
+    request, session, url_for
 from google.appengine.ext import ndb
 from food.models import Ingredient, Recipe
-from shortcuts import unique_append_to_session, get_or_404
+from shortcuts import remove_from_session, unique_append_to_session, get_or_404
 
 
 frontend = Blueprint('frontend', __name__)
@@ -37,18 +38,25 @@ def ingredient_detail(slug):
                            ingredient=ingredient)
 
 
-@frontend.route('/recipe/<slug>/save', methods=['GET', 'POST'])
-def recipe_save(slug):
-    """ Saves a recipe to session, or 404. """
+@frontend.route('/recipe/<slug>/<action>', methods=['GET', 'POST'])
+def recipe_action(slug, action):
+    """ Save or delete a recipe to or from session, or 404. """
+    if action not in ['save', 'delete']:
+        abort(404)
     recipe = get_or_404(Recipe, Recipe.slug == slug)
     if request.method == 'POST':
-        if unique_append_to_session('recipes', recipe.key.urlsafe()):
-            flash(u'Recipe saved')
+        if action == 'save':
+            update = unique_append_to_session
         else:
-            flash(u'Unable to save recipe')
+            update = remove_from_session
+        if update('recipes', recipe.key.urlsafe()):
+            flash(u'Recipe %sd' % action)
+        else:
+            flash(u'Unable to %s recipe' % action)
         return redirect(url_for('frontend.recipe_detail', slug=slug))
     else:
-        return render_template('frontend/recipe_save.html', recipe=recipe)
+        return render_template('frontend/recipe_action.html', recipe=recipe,
+                               action=action)
 
 
 @frontend.route('/saved')

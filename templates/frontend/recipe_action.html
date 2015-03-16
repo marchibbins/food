@@ -3,9 +3,9 @@
 {% block title %}{{ recipe.name }}{% endblock %}
 
 {% block main %}
-    <h1>Save {{ recipe.name }}?</h1>
+    <h1>{{ action|title }} {{ recipe.name }}?</h1>
 
-    <form action="{{ url_for('frontend.recipe_save', slug=recipe.slug) }}" method="POST">
+    <form action="{{ url_for('frontend.recipe_action', slug=recipe.slug, action=action) }}" method="POST">
         <button>Confirm</button>
     </form>
 

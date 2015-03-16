@@ -12,7 +12,7 @@
         </ul>
     {% endif %}
 
-    <form action="{{ url_for('frontend.recipe_save', slug=recipe.slug) }}" method="POST">
+    <form action="{{ url_for('frontend.recipe_action', slug=recipe.slug, action='save') }}" method="POST">
         <button>Save</button>
     </form>
 
