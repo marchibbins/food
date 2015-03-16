@@ -3,6 +3,7 @@ from google.appengine.ext import ndb
 
 class Ingredient(ndb.Model):
     name = ndb.StringProperty(required=True)
+    slug = ndb.StringProperty(indexed=True)
     measure_choices = ('grams', 'ml', 'units')
     measure = ndb.StringProperty(choices=measure_choices, required=True)
 

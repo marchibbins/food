@@ -29,6 +29,37 @@ def recipe_save(slug):
     return redirect(url_for('frontend.recipe_detail', slug=slug))
 
 
+@frontend.route('/reload')
+def dummy_data():
+    """ Adds dummy data for development. """
+    from google.appengine.ext import ndb
+    from food.models import Ingredient, Quantity
+
+    # Out with the old
+    ndb.delete_multi(Ingredient.query().fetch(keys_only=True))
+    ndb.delete_multi(Recipe.query().fetch(keys_only=True))
+
+    # In with the new
+    one = Ingredient(name='One', slug='one', measure='grams')
+    two = Ingredient(name='Two', slug='two', measure='ml')
+    three = Ingredient(name='Three', slug='three', measure='units')
+    ndb.put_multi([
+        one, two, three
+    ])
+    ndb.put_multi([
+        Recipe(name='A', slug='a', quantities=[
+            Quantity(ingredient=one, amount=10),
+            Quantity(ingredient=two, amount=12),
+            Quantity(ingredient=three, amount=5)
+        ]),
+        Recipe(name='B', slug='b', quantities=[
+            Quantity(ingredient=one, amount=3)
+        ]),
+    ])
+
+    return "Data loaded"
+
+
 def frontend_errors(app):
     """ Render generic error templates. """
     @app.errorhandler(404)
