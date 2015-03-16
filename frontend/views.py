@@ -5,7 +5,7 @@ from google.appengine.ext import ndb
 from itertools import chain
 
 from food.models import Ingredient, Quantity, Recipe
-from shortcuts import get_or_404, remove_from_session, unique_append_to_session
+from shortcuts import remove_from_session, unique_append_to_session
 
 
 frontend = Blueprint('frontend', __name__)
@@ -21,7 +21,7 @@ def recipe_list():
 @frontend.route('/recipe/<slug>')
 def recipe_detail(slug):
     """ Render a recipe matching a slug, or 404. """
-    recipe = get_or_404(Recipe, Recipe.slug == slug)
+    recipe = Recipe.get_or_404(slug)
     return render_template('frontend/recipe_detail.html', recipe=recipe)
 
 
@@ -36,7 +36,7 @@ def ingredient_list():
 @frontend.route('/ingredients/<slug>')
 def ingredient_detail(slug):
     """ Render a ingredient matching a slug, or 404. """
-    ingredient = get_or_404(Ingredient, Ingredient.slug == slug)
+    ingredient = Ingredient.get_or_404(slug)
     return render_template('frontend/ingredient_detail.html',
                            ingredient=ingredient)
 
@@ -46,7 +46,7 @@ def recipe_action(slug, action):
     """ Save or delete a recipe to or from session, or 404. """
     if action not in ['save', 'delete']:
         abort(404)
-    recipe = get_or_404(Recipe, Recipe.slug == slug)
+    recipe = Recipe.get_or_404(slug)
     if request.method == 'POST':
         if action == 'save':
             update = unique_append_to_session

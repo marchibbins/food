@@ -1,4 +1,4 @@
-from flask import abort, session
+from flask import session
 
 
 def append_to_session(key, value):
@@ -26,12 +26,3 @@ def unique_append_to_session(key, value):
         return session[key]
     else:
         return append_to_session(key, value)
-
-
-def get_or_404(klass, *args, **kwargs):
-    """ Gets an object or raises 404. """
-    instance = klass.query(*args, **kwargs).get()
-    if not instance:
-        abort(404)
-    else:
-        return instance

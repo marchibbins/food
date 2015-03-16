@@ -1,15 +1,28 @@
+from flask import abort
 from google.appengine.ext import ndb
 
 
-class Ingredient(ndb.Model):
+class BaseModel(ndb.Model):
+    """ Adds shortcut methods to `ndb.Model` for get and ordered fetch. """
+    @classmethod
+    def fetch_all(cls):
+        return cls.query().order(Ingredient.slug).fetch()
+
+    @classmethod
+    def get_or_404(cls, slug):
+        """ Gets an object or raises 404. """
+        instance = cls.query(cls.slug == slug).get()
+        if not instance:
+            abort(404)
+        else:
+            return instance
+
+
+class Ingredient(BaseModel):
     name = ndb.StringProperty(required=True)
     slug = ndb.StringProperty(indexed=True)
     measure_choices = ('grams', 'ml', 'units')
     measure = ndb.StringProperty(choices=measure_choices, required=True)
-
-    @classmethod
-    def fetch_all(klass):
-        return klass.query().order(Ingredient.slug).fetch()
 
 
 class Quantity(ndb.Model):
@@ -17,12 +30,8 @@ class Quantity(ndb.Model):
     amount = ndb.IntegerProperty(required=True)
 
 
-class Recipe(ndb.Model):
+class Recipe(BaseModel):
     name = ndb.StringProperty(required=True)
     slug = ndb.StringProperty(indexed=True)
     method = ndb.TextProperty()
     quantities = ndb.StructuredProperty(Quantity, repeated=True)
-
-    @classmethod
-    def fetch_all(klass):
-        return klass.query().order(Recipe.slug).fetch()
