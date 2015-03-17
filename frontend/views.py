@@ -1,12 +1,13 @@
 from flask import abort, Blueprint, flash, redirect, render_template, \
-    request, session, url_for
+    request, url_for
 
 from google.appengine.ext import ndb
 from itertools import chain
 
 from food.models import Ingredient, Quantity, Recipe
 from food.parser import resetdb
-from shortcuts import remove_from_session, unique_append_to_session
+from shortcuts import get_session_list, remove_from_session, \
+    unique_append_to_session
 
 
 frontend = Blueprint('frontend', __name__)
@@ -68,7 +69,7 @@ def recipe_action(slug, action):
 def saved():
     """ Render a list of saved recipes and collate ingredients. """
     recipe_keys = map(lambda string: ndb.Key(urlsafe=string),
-                      session.get('recipes', []))
+                      get_session_list('recipes'))
     recipes = filter(None, ndb.get_multi(recipe_keys))
     quantities = {}
     for quantity in list(chain.from_iterable(

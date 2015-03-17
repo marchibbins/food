@@ -11,9 +11,19 @@ def append_to_session(key, value):
     return session[key]
 
 
+def get_session_list(key):
+    """ Gets list from session or returns empty list. """
+    return session.get(key, [])
+
+
+def in_session_list(key, value):
+    """ Checks whether value is in session list. """
+    return value in get_session_list(key)
+
+
 def remove_from_session(key, value):
     """ Removes a value from session if exists, returns True or False. """
-    if value in session.get(key):
+    if in_session_list(key, value):
         session[key].remove(value)
         return True
     else:
@@ -22,7 +32,7 @@ def remove_from_session(key, value):
 
 def unique_append_to_session(key, value):
     """ Extends `append_to_session`, enforcing uniqueness. """
-    if value in session.get(key, []):
+    if in_session_list(key, value):
         return session[key]
     else:
         return append_to_session(key, value)
