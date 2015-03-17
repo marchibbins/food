@@ -70,7 +70,7 @@ def saved():
     quantities = {}
     for quantity in list(chain.from_iterable(
                            map(lambda recipe: recipe.quantities, recipes))):
-        key = quantity.ingredient.slug
+        key = quantity.ingredient.urlsafe()
         if quantities.get(key):
             quantities[key].amount += quantity.amount
         else:
@@ -97,12 +97,12 @@ def dummy_data():
     ])
     ndb.put_multi([
         Recipe(name='A', slug='a', quantities=[
-            Quantity(ingredient=one, amount=10),
-            Quantity(ingredient=two, amount=12),
-            Quantity(ingredient=three, amount=5)
+            Quantity(ingredient=one.key, amount=10),
+            Quantity(ingredient=two.key, amount=12),
+            Quantity(ingredient=three.key, amount=5)
         ]),
         Recipe(name='B', slug='b', quantities=[
-            Quantity(ingredient=one, amount=3)
+            Quantity(ingredient=one.key, amount=3)
         ]),
     ])
 

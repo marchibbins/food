@@ -28,7 +28,7 @@ class Ingredient(BaseModel):
 
 class Quantity(ndb.Model):
     """ Represents an amount of ingredients. """
-    ingredient = ndb.StructuredProperty(Ingredient, required=True)
+    ingredient = ndb.KeyProperty(Ingredient, required=True)
     amount = ndb.IntegerProperty(required=True)
 
 
