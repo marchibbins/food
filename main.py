@@ -1,4 +1,5 @@
 from flask import Flask
+
 from frontend.views import frontend, frontend_errors
 
 
