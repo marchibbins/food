@@ -7,7 +7,7 @@ class BaseModel(ndb.Model):
     """ Adds shortcut methods to `ndb.Model` for get and ordered fetch. """
     @classmethod
     def fetch_all(cls):
-        return cls.query().order(cls.slug)
+        return cls.query().order(cls.slug).fetch()
 
     @classmethod
     def get_or_404(cls, slug):
