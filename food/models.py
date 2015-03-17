@@ -31,6 +31,14 @@ class Quantity(ndb.Model):
     ingredient = ndb.KeyProperty(Ingredient, required=True)
     amount = ndb.IntegerProperty(required=True)
 
+    @property
+    def measured_amount(self):
+        measure = self.ingredient.get().measure
+        if measure == 'units':
+            return self.amount
+        else:
+            return '%d%s' % (self.amount, measure)
+
 
 class Recipe(BaseModel):
     """ Represents a single recipe, with multiple quantities. """
