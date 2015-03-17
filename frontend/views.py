@@ -38,8 +38,9 @@ def ingredient_list():
 def ingredient_detail(slug):
     """ Render a ingredient matching a slug, or 404. """
     ingredient = Ingredient.get_or_404(slug)
+    recipes = Recipe.query(Recipe.quantities.ingredient == ingredient.key)
     return render_template('frontend/ingredient_detail.html',
-                           ingredient=ingredient)
+                           ingredient=ingredient, recipes=recipes)
 
 
 @frontend.route('/recipe/<slug>/<action>', methods=['GET', 'POST'])

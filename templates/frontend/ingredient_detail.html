@@ -4,8 +4,20 @@
 
 {% block main %}
     <h1>{{ ingredient.name }}</h1>
-
     <ul>
         <li>Measured in '{{ ingredient.measure }}'</li>
     </ul>
+
+    {% if recipes %}
+        <h2>Receipes</h2>
+        <ul>
+            {% for recipe in recipes %}
+                <li>
+                    <a href="{{ url_for('frontend.recipe_detail', slug=recipe.slug) }}">{{ recipe.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recipes found</p>
+    {% endif %}
 {% endblock %}
