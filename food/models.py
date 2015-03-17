@@ -21,9 +21,9 @@ class BaseModel(ndb.Model):
 class Ingredient(BaseModel):
     """ Represents a single ingredient. """
     name = ndb.StringProperty(required=True)
-    slug = ndb.StringProperty(indexed=True)
+    slug = ndb.StringProperty(required=True, indexed=True)
     measure_choices = ('grams', 'ml', 'units')
-    measure = ndb.StringProperty(choices=measure_choices, required=True)
+    measure = ndb.StringProperty(required=True, choices=measure_choices)
 
 
 class Quantity(ndb.Model):
@@ -35,6 +35,6 @@ class Quantity(ndb.Model):
 class Recipe(BaseModel):
     """ Represents a single recipe, with multiple quantities. """
     name = ndb.StringProperty(required=True)
-    slug = ndb.StringProperty(indexed=True)
+    slug = ndb.StringProperty(required=True, indexed=True)
     method = ndb.TextProperty()
     quantities = ndb.StructuredProperty(Quantity, repeated=True)
