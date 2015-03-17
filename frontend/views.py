@@ -84,14 +84,16 @@ def saved():
 @frontend.route('/reload')
 def dummy_data():
     """ Adds dummy data for development. """
+    from food.models import Measures
+
     # Out with the old
     ndb.delete_multi(Ingredient.query().fetch(keys_only=True))
     ndb.delete_multi(Recipe.query().fetch(keys_only=True))
 
     # In with the new
-    one = Ingredient(name='One', slug='one', measure='grams')
-    two = Ingredient(name='Two', slug='two', measure='ml')
-    three = Ingredient(name='Three', slug='three', measure='units')
+    one = Ingredient(name='One', slug='one', measure=Measures.GRAMS)
+    two = Ingredient(name='Two', slug='two', measure=Measures.MILLILITRES)
+    three = Ingredient(name='Three', slug='three', measure=Measures.UNITS)
     ndb.put_multi([
         one, two, three
     ])

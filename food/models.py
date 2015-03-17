@@ -18,12 +18,19 @@ class BaseModel(ndb.Model):
             return instance
 
 
+class Measures():
+    """ Units of measure. """
+    GRAMS = 'g'
+    MILLILITRES = 'ml'
+    UNITS = 'u'
+    choices = (GRAMS, MILLILITRES, UNITS)
+
+
 class Ingredient(BaseModel):
     """ Represents a single ingredient. """
     name = ndb.StringProperty(required=True)
     slug = ndb.StringProperty(required=True, indexed=True)
-    measure_choices = ('grams', 'ml', 'units')
-    measure = ndb.StringProperty(required=True, choices=measure_choices)
+    measure = ndb.StringProperty(required=True, choices=Measures.choices)
 
 
 class Quantity(ndb.Model):
@@ -34,7 +41,7 @@ class Quantity(ndb.Model):
     @property
     def measured_amount(self):
         measure = self.ingredient.get().measure
-        if measure == 'units':
+        if measure == Measures.UNITS:
             return self.amount
         else:
             return '%d%s' % (self.amount, measure)
