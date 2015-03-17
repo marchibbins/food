@@ -8,7 +8,7 @@
         <ul>
             {% for quantity in recipe.quantities %}
                 {% with ingredient = quantity.ingredient.get() %}
-                    <li>{{ quantity.measured_amount }} <a href="{{ url_for('frontend.ingredient_detail', slug=ingredient.slug) }}">{{ ingredient.name }}</a></li>
+                    <li>{{ quantity.measured_amount }} <a href="{{ url_for('frontend.ingredient_detail', slug=ingredient.slug) }}">{{ ingredient.name|lower }}</a></li>
                 {% endwith %}
             {% endfor %}
         </ul>

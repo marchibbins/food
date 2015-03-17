@@ -22,7 +22,7 @@ class Measures():
     """ Units of measure. """
     GRAMS = 'g'
     MILLILITRES = 'ml'
-    UNITS = 'u'
+    UNITS = 'units'
     choices = (GRAMS, MILLILITRES, UNITS)
 
 
