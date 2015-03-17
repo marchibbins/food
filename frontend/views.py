@@ -65,8 +65,9 @@ def recipe_action(slug, action):
 @frontend.route('/saved')
 def saved():
     """ Render a list of saved recipes and collate ingredients. """
-    recipes = filter(None, ndb.get_multi(map(lambda string: ndb.Key(urlsafe=string),
-                                             session.get('recipes', []))))
+    recipe_keys = map(lambda string: ndb.Key(urlsafe=string),
+                      session.get('recipes', []))
+    recipes = filter(None, ndb.get_multi(recipe_keys))
     quantities = {}
     for quantity in list(chain.from_iterable(
                            map(lambda recipe: recipe.quantities, recipes))):
@@ -75,8 +76,7 @@ def saved():
             quantities[key].amount += quantity.amount
         else:
             quantities[key] = Quantity(ingredient=quantity.ingredient,
-                                           amount=quantity.amount)
-
+                                       amount=quantity.amount)
     return render_template('frontend/saved.html', recipes=recipes,
                            quantities=quantities)
 
