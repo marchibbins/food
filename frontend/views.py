@@ -6,8 +6,8 @@ from itertools import chain
 
 from food.models import Ingredient, Quantity, Recipe
 from food.parser import resetdb
-from shortcuts import get_session_list, in_session_list, remove_from_session, \
-    unique_append_to_session
+from utils.session import get_session_list, in_session_list, \
+    remove_from_session, unique_append_to_session
 
 
 frontend = Blueprint('frontend', __name__)
