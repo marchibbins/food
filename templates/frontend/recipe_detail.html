@@ -14,7 +14,13 @@
         </ul>
     {% endif %}
 
-    <form action="{{ url_for('frontend.recipe_action', slug=recipe.slug, action='save') }}" method="POST">
-        <button>Save</button>
-    </form>
+    {% if saved %}
+        <form action="{{ url_for('frontend.recipe_action', slug=recipe.slug, action='remove') }}" method="POST">
+            <button>Remove</button>
+        </form>
+    {% else %}
+        <form action="{{ url_for('frontend.recipe_action', slug=recipe.slug, action='save') }}" method="POST">
+            <button>Save</button>
+        </form>
+    {% endif %}
 {% endblock %}

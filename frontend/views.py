@@ -6,7 +6,7 @@ from itertools import chain
 
 from food.models import Ingredient, Quantity, Recipe
 from food.parser import resetdb
-from shortcuts import get_session_list, remove_from_session, \
+from shortcuts import get_session_list, in_session_list, remove_from_session, \
     unique_append_to_session
 
 
@@ -24,7 +24,9 @@ def recipe_list():
 def recipe_detail(slug):
     """ Render a recipe matching a slug, or 404. """
     recipe = Recipe.get_or_404(slug)
-    return render_template('frontend/recipe_detail.html', recipe=recipe)
+    saved = in_session_list('recipes', recipe.key.urlsafe())
+    return render_template('frontend/recipe_detail.html',
+                           recipe=recipe, saved=saved)
 
 
 @frontend.route('/ingredients/')
