@@ -13,6 +13,9 @@
             {% endfor %}
         </ul>
     {% endif %}
+    {% if recipe.method %}
+        <p>{{ recipe.method }}</p>
+    {% endif %}
 
     {% if saved %}
         <form action="{{ url_for('frontend.recipe_action', slug=recipe.slug, action='remove') }}" method="POST">

@@ -30,12 +30,12 @@ def put():
         three,
     ])
     return ndb.put_multi([
-        Recipe(name='A', slug='a', quantities=[
+        Recipe(name='A', slug='a', method="Make.", quantities=[
             Quantity(ingredient=one.key, amount=10),
             Quantity(ingredient=two.key, amount=12),
             Quantity(ingredient=three.key, amount=5),
         ]),
-        Recipe(name='B', slug='b', quantities=[
+        Recipe(name='B', slug='b', method="Make.", quantities=[
             Quantity(ingredient=one.key, amount=3),
         ]),
     ])
