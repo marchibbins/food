@@ -75,7 +75,7 @@ def load_json():
                                        amount=quantity['amount']))
         recipes.append(Recipe(name=recipe['name'],
                               slug=recipe['slug'],
-                              method=recipe['method'],
+                              method=recipe.get('method', ''),
                               quantities=quantities))
     recipes_file.close()
     ndb.put_multi(recipes)
