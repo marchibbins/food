@@ -5,6 +5,7 @@ from google.appengine.ext import ndb
 from itertools import chain
 
 from food.models import Ingredient, Quantity, Recipe
+from food.parser import resetdb
 from shortcuts import remove_from_session, unique_append_to_session
 
 
@@ -81,34 +82,10 @@ def saved():
                            quantities=quantities)
 
 
-@frontend.route('/reload')
+@frontend.route('/resetdb')
 def dummy_data():
-    """ Adds dummy data for development. """
-    from food.models import Measures
-
-    # Out with the old
-    ndb.delete_multi(Ingredient.query().fetch(keys_only=True))
-    ndb.delete_multi(Recipe.query().fetch(keys_only=True))
-
-    # In with the new
-    one = Ingredient(name='One', slug='one', measure=Measures.GRAMS)
-    two = Ingredient(name='Two', slug='two', measure=Measures.MILLILITRES)
-    three = Ingredient(name='Three', slug='three', measure=Measures.UNITS)
-    ndb.put_multi([
-        one, two, three
-    ])
-    ndb.put_multi([
-        Recipe(name='A', slug='a', quantities=[
-            Quantity(ingredient=one.key, amount=10),
-            Quantity(ingredient=two.key, amount=12),
-            Quantity(ingredient=three.key, amount=5)
-        ]),
-        Recipe(name='B', slug='b', quantities=[
-            Quantity(ingredient=one.key, amount=3)
-        ]),
-    ])
-
-    return "Data loaded"
+    """ Resets database, returns True or False. """
+    return resetdb()
 
 
 def frontend_errors(app):
