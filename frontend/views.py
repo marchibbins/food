@@ -43,8 +43,8 @@ def ingredient_detail(slug):
 
 @frontend.route('/recipe/<slug>/<action>', methods=['GET', 'POST'])
 def recipe_action(slug, action):
-    """ Save or delete a recipe to or from session, or 404. """
-    if action not in ['save', 'delete']:
+    """ Save or remove a recipe to or from session, or 404. """
+    if action not in ['save', 'remove']:
         abort(404)
     recipe = Recipe.get_or_404(slug)
     if request.method == 'POST':
