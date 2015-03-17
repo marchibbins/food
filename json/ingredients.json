@@ -1,0 +1,17 @@
+[
+    {
+        "name": "One",
+        "slug": "one",
+        "measure": "g"
+    },
+    {
+        "name": "Two",
+        "slug": "two",
+        "measure": "ml"
+    },
+    {
+        "name": "Three",
+        "slug": "three",
+        "measure": "units"
+    }
+]

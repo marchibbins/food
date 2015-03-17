@@ -1,0 +1,32 @@
+[
+    {
+        "name": "A",
+        "slug": "a",
+        "method": "Make.",
+        "quantities": [
+            {
+                "slug": "one",
+                "amount": 10
+            },
+            {
+                "slug": "two",
+                "amount": 12
+            },
+            {
+                "slug": "three",
+                "amount": 5
+            }
+        ]
+    },
+    {
+        "name": "B",
+        "slug": "b",
+        "method": "Make.",
+        "quantities": [
+            {
+                "slug": "one",
+                "amount": 3
+            }
+        ]
+    }
+]
